@@ -1,0 +1,167 @@
+Transcript clear.
+"####-----------------APILAR en P1 y P2----------#####"
+p1:=Pila new.
+p1 Apilar: 5.
+p1 Apilar: 3.
+p1 Apilar: 1.
+Transcript show: (p1 instVarNamed: 'Elementos').
+
+p2:=Pila new.
+p2 Apilar: 12.
+p2 Apilar: 11.
+p2 Apilar: 10.
+p2 Apilar: 8.
+p2 Apilar: 6.
+p2 Apilar: 4.
+p2 Apilar: 2.
+Transcript cr.
+Transcript show: (p2 instVarNamed: 'Elementos').
+
+"#####--------------------CIMA--------------#####"
+Transcript cr.
+Transcript show: p1 Cima.
+
+"######----------------CONCATENAR-----------------######"
+Transcript cr.
+p:= p1 deepCopy.
+p Concatenar: p2.
+Transcript show: (p instVarNamed: 'Elementos').
+
+"####----------------DESAPILAR--------#####"
+Transcript cr.
+Transcript show: p2 Desapilar.
+Transcript cr.
+Transcript show: (p2 instVarNamed: 'Elementos').
+
+"####----------------DUPLICAR--------#####"
+Transcript cr.
+pp:=p1 deepCopy.
+pp Duplicar.
+Transcript show: (pp instVarNamed: 'Elementos').
+
+"####----------------ENTREMEZCLAR--------#####"
+Transcript cr.
+pEntre:=p1 deepCopy.
+pEntre Entremezclar: p2.
+Transcript show: (pEntre instVarNamed: 'Elementos').
+
+"####----------------ES_PILA_VACIA--------#####"
+Transcript cr.
+Transcript show: p1 EsPilaVacia.
+
+"####----------------FONDO--------#####"
+Transcript cr.
+Transcript show: p2 Fondo.
+
+"####----------------INVERSA--------#####"
+Transcript cr.
+pInv:= p1 deepCopy.
+pInv Inversa.
+Transcript show: (pInv instVarNamed: 'Elementos').
+
+"####----------------PROFUNDIDAD--------#####"
+Transcript cr.
+Transcript show: p1 Profundidad.
+
+"#########################################"
+
+"####----------------CREAR SECUENCIA--------#####"
+sec1:= Secuencia new.
+sec1 Crear: p1 and: p2.
+Transcript cr.
+Transcript show: (sec1 instVarNamed: 'Sec').
+
+"####----------------ACTUAL--------#####"
+Transcript cr.
+Transcript show: sec1 Actual.
+
+"####----------------AVANZAR--------#####"
+Transcript cr.
+sec1 Avanzar.
+Transcript show: (sec1 instVarNamed: 'Sec').
+
+"####----------------ELIMINAR--------#####"
+Transcript cr.
+sec1 Eliminar.
+Transcript show: (sec1 instVarNamed: 'Sec').
+
+"####----------------ES_SECUENCIA_VACIA--------#####"
+Transcript cr.
+Transcript show: sec1 EsSecVacia.
+
+"####----------------FIN--------#####"
+Transcript cr.
+Transcript show: sec1 Fin.
+
+"####----------------INSERTAR--------#####"
+Transcript cr.
+sec1 Insertar: 0.
+Transcript show: (sec1 instVarNamed: 'Sec').
+
+"####----------------REINICIAR--------#####"
+Transcript cr.
+sec1 Reiniciar.
+Transcript show: (sec1 instVarNamed: 'Sec').
+
+--------------------------------------------------------###################################
+
+----------------------APLICACION CON VENTANA--------------------------
+
+
+
+Transcript clear.
+post := Pila new.
+fibo:= Pila new.
+Transcript clear.
+window:=SystemWindow new.
+window setLabel:'FIBONACCI'.
+
+scrollPane := ScrollPane new.
+pasteUpMorph := PasteUpMorph new.
+pasteUpMorph extent: 1000@1000.
+scrollPane scroller addMorph: pasteUpMorph.
+window addMorph: scrollPane frame: (0@0 corner: 1@1).
+
+"Textbox para agregar"
+tbValor := TextMorph new.
+tbValor string: '' fontName: 'BitstreamVeraSans' size: 300.
+tbValor extent: 60@200.
+tbValor center: Display center.
+window addMorph: tbValor.
+tbValor position: (window position) + (250@40).
+
+"Crear boton calcular serie de fibonacci"
+bCalcFibo := SimpleButtonMorph new.
+bCalcFibo target: [  Transcript clear.
+					number:=fibo Fibonacci: (tbValor) text asNumber.
+					UIManager default inform: 'El fibonacci de ', tbValor text, ' es ', number.
+					Transcript show: 'El fibonacci es ', number.].
+bCalcFibo actionSelector: #value.
+bCalcFibo label: 'Calcular fibonacci'.
+bCalcFibo height: 20.
+bCalcFibo width: 200.
+window addMorph: bCalcFibo.
+bCalcFibo position: (window position) + (20@40).
+
+"TEXTBOX AGREGAR STRING POSTFIJO"
+tbStr := TextMorph new.
+tbStr string: '' fontName: 'BitstreamVeraSans' size: 300.
+tbStr extent: 200@200.
+tbStr center: Display center.
+window addMorph: tbStr.
+tbStr position: (window position) + (250@80).
+
+"Crear boton calcular opercion postfija"
+bCalcPost := SimpleButtonMorph new.
+bCalcPost target: [  Transcript cr.
+					number1:=post PostFija: (tbStr) text asString.
+					UIManager default inform: 'El resultado es ', number1.
+					Transcript show: 'El resultado es ', number1.].
+bCalcPost actionSelector: #value.
+bCalcPost label: 'Calcular Postfija'.
+bCalcPost height: 20.
+bCalcPost width: 200.
+window addMorph: bCalcPost.
+bCalcPost position: (window position) + (20@80).
+
+window openInWorld.
